@@ -18,7 +18,7 @@ on:
         type: choice
         required: true
         default: cards
-        options: [cards, stock]
+        options: [cards, stock, ai-images]
 
 permissions:
   contents: read
@@ -40,6 +40,8 @@ jobs:
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_IMAGE_MODEL: ${{ vars.HF_IMAGE_MODEL }}
           CHANNEL: ${{ inputs.channel }}
           TOPIC: ${{ inputs.topic }}
           VISUAL_MODE: ${{ inputs.visuals }}
