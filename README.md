@@ -35,7 +35,7 @@ See **[docs/FREE_VIDEO_AND_VOICE_TOOLS.md](docs/FREE_VIDEO_AND_VOICE_TOOLS.md)**
 
 ## Daily run
 
-The intended interface is GitHub Actions → **Daily Content Team** → choose channel(s) → Run workflow. The automation/workflow implementation is still being built; this README is not a claim that the workflow is already installed or functional.
+Go to GitHub Actions → **Daily AI Content Team** → Run workflow → choose channel and visuals. The workflow is implemented in `.github/workflows/daily-video.yml`. It requires a `GROQ_API_KEY` Actions secret. Add `PEXELS_API_KEY` optionally for stock footage. Select `cards` for a footage-free fallback or `stock` for Pexels footage (fallback cards are used when footage is unavailable).
 
 ## Key operating rules
 
@@ -49,8 +49,8 @@ The intended interface is GitHub Actions → **Daily Content Team** → choose c
 
 ## Report history
 
-Daily reports should be saved under `reports/daily/YYYY-MM-DD/` when the workflow is implemented. Keep a lightweight index of idea IDs, dates, channels and statuses to reduce duplicate concepts.
+Generated MP4, script JSON, narration MP3, captions SRT and report are uploaded as a GitHub Actions artifact for 7 days. Keep a lightweight index of idea IDs, dates, channels and statuses to reduce duplicate concepts.
 
-## Important
+## Setup\n\n- Add `GROQ_API_KEY` in Settings → Secrets and variables → Actions.\n- Optional: add `PEXELS_API_KEY` for stock clips.\n- The default model is `openai/gpt-oss-120b`; model access and limits can change.\n- Trigger the workflow manually. No automatic publishing is enabled.\n\n## Important
 
 This project is a content-planning assistant, not an auto-publishing system. Publishing should remain manual until the user has tested and approved quality and platform compliance.
