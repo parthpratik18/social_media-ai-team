@@ -20,8 +20,12 @@ Free tiers, credits, quotas, regional availability, and commercial-use terms cha
 - ComfyUI: local image/video workflows; hardware/model requirements can be significant.
 - Hugging Face: models and demos; hosted spaces may sleep or have quotas.
 
-## Baseline automated output
-This repository's basic pipeline can produce narration plus stock footage (when a Pexels API key is configured) or a simple background/card montage. It does **not** generate AI video clips by default. Free AI-video credits are inconsistent, so generative video should remain an optional/manual step until a provider's free access is confirmed.
+## Automated visual modes
+- `ai-images`: attempts to generate a separate AI still for each scene through Hugging Face Inference. It animates those stills with FFmpeg zoom/pan motion (Ken Burns-style); this is **not true AI-generated video**. Requires the optional `HF_TOKEN` secret and provider/model availability; costs or credits may apply.
+- `stock`: searches and uses Pexels clips if `PEXELS_API_KEY` is set.
+- `cards`: uses simple background clips as the last fallback.
+
+In `ai-images` mode, generation failures fall back to stock clips when Pexels is configured, then to cards. The pipeline still requires human review. Free AI-video credits are inconsistent, so true generated motion video remains optional/manual.
 
 ## Workflow
 1. Generate an original script and scene descriptions.
