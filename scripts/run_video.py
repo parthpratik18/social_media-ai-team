@@ -67,7 +67,7 @@ def generate_scene_image(scene, channel, idx, path):
     if not token:return False
     try:
         from huggingface_hub import InferenceClient
-        model=os.getenv("HF_IMAGE_MODEL","black-forest-labs/FLUX.1-schnell")
+        model=os.getenv("HF_IMAGE_MODEL") or "black-forest-labs/FLUX.1-schnell"
         prompt=(scene.get("visual_prompt") or scene.get("visual_search") or scene.get("narration") or "cinematic scene")
         prompt=f"Vertical 9:16 cinematic still for a short social video. {prompt}. Photorealistic or polished cinematic illustration, clear focal subject, rich lighting and depth, composition suitable for vertical mobile viewing. No text, subtitles, watermarks, logos, UI or collage."
         client=InferenceClient(model=model,token=token)
@@ -80,8 +80,8 @@ def generate_scene_image(scene, channel, idx, path):
 
 def render_image_motion(image_path, clip, duration=SCENE_SECONDS, idx=0):
     # Ken Burns-style movement on a still (not generated video footage).
-    zoom="1.0+0.0008"
-    if idx%2: zoom="1.0+0.00065"
+    zoom="min(zoom+0.0012,1.12)"
+    if idx%2: zoom="min(zoom+0.0009,1.10)"
     vf=f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},zoompan=z='{zoom}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={int(duration*25)}:s={W}x{H}:fps=25,format=yuv420p"
     run_ffmpeg(["-loop","1","-i",image_path,"-t",str(duration),"-vf",vf,"-r","25","-c:v","libx264","-preset","veryfast","-pix_fmt","yuv420p",clip])
 
