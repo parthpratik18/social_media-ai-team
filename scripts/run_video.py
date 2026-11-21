@@ -24,7 +24,7 @@ Start with an attention-grabbing spoken hook, avoid filler, finish with a natura
 Be truthful. For spirituality never invent scripture or attribute fabricated quotes. Avoid copyright characters, copied scripts or impersonation."""
     resp=requests.post("https://api.groq.com/openai/v1/chat/completions",
       headers={"Authorization":f"Bearer {api}","Content-Type":"application/json"},
-      json={"model":os.getenv("GROQ_MODEL","llama-3.3-70b-versatile"),"temperature":0.85,
+      json={"model":os.getenv("GROQ_MODEL","openai/gpt-oss-120b"),"temperature":0.85,
         "response_format":{"type":"json_object"},
         "messages":[{"role":"system","content":"Return valid JSON only."},{"role":"user","content":prompt}]},timeout=90)
     resp.raise_for_status()
